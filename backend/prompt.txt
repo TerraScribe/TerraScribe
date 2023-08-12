@@ -1,0 +1,13 @@
+Generate Terraform code for provisioning a <architecture-explanation> in <cloud-provider> cloud. The architecture involves:
+- <List key components and services needed for the architecture>.
+- The setup should follow best practices for security, scalability, and maintainability.
+- Implement the principle of least privilege for IAM roles and permissions.
+- Use variables for customizable configuration options.
+- Organize the code into separate `.tf` files for improved modularity and readability.
+- Document each resource and module for future reference.
+- Ensure the architecture has strategy for backup and Disaster Recovery.
+- Enable proper monitoring and logging for the infrastructure.
+
+Please provide the Terraform code that accomplishes the above requirements, including appropriate resource names, variable definitions, and module organization. 
+
+[Optionally, include any additional specifications or preferences you have for the architecture or code generation process.]
