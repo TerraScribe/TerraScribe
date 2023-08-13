@@ -5,7 +5,11 @@ import Editor from "@monaco-editor/react";
 interface MonacoEditorProps {}
 
 const MonacoEditor: FC<MonacoEditorProps> = ({}) => {
-    return <Editor height="90vh" defaultLanguage="hcl" theme="vs-dark" />;
+    return (
+        <div className="p-5">
+            <Editor height="90vh" defaultLanguage="hcl" theme="vs-dark" />
+        </div>
+    );
 };
 
 export default MonacoEditor;
