@@ -2,9 +2,11 @@
 import { FC } from "react";
 import { useState } from "react";
 
-interface PromptProps { }
+interface PromptProps {
+    generateCode: (prompt: string, selectedProvider: string, selectedTfVersion: string) => void;
+}
 
-const Prompt: FC<PromptProps> = ({ }) => {
+const Prompt: FC<PromptProps> = ({ generateCode }) => {
 
     const [prompt, setPrompt] = useState<string>('');
     const [selectedProvider, setSelectedProvider] = useState<string>('aws');
@@ -38,9 +40,9 @@ const Prompt: FC<PromptProps> = ({ }) => {
 
     const handleGenerateClick = (e: any) => {
         e.preventDefault();
-        console.log(prompt);
-        console.log(selectedProvider);
-        console.log(selectedTfVersion);
+        if (validatePromptInputs(prompt, selectedProvider, selectedTfVersion) === true) {
+            generateCode(prompt, selectedProvider, selectedTfVersion);
+        }
     }
 
     const handleVisualizeClick = (e: any) => {
@@ -52,10 +54,23 @@ const Prompt: FC<PromptProps> = ({ }) => {
         e.preventDefault();
         console.log(prompt);
     }
-    
+
     const handleForwardClick = (e: any) => {
         e.preventDefault();
         console.log(prompt);
+    }
+
+    const validatePromptInputs = (prompt: string, selectedProvider: string, selectedTfVersion: string) => {
+        if (!prompt && prompt === '') {
+            return false;
+        }
+        if (!selectedProvider && selectedProvider === '') {
+            return false;
+        }
+        if (!selectedTfVersion && selectedTfVersion === '') {
+            return false;
+        }
+        return true;
     }
 
     return (
@@ -112,7 +127,7 @@ const Prompt: FC<PromptProps> = ({ }) => {
                     className="bg-gray-100 px-4 py-2 rounded-md hover:bg-gray-400 text-lg"
                     onClick={handleForwardClick}
                 >
-                 &#8250;
+                    &#8250;
                 </button>
                 <button
                     className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
@@ -120,7 +135,7 @@ const Prompt: FC<PromptProps> = ({ }) => {
                 >
                     Visualize
                 </button>
-                
+
             </div>
         </div>
 
