@@ -33,3 +33,8 @@
 # typescript
 *.tsbuildinfo
 *next-env.d.ts
+
+
+# python
+*__
+*venv
