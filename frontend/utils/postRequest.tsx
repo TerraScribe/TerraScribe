@@ -12,6 +12,7 @@ const postRequest = async (url: string, body: any) => {
         return data;
     } catch (error) {
         console.error(error);
+        return null;
     }
 }
 
