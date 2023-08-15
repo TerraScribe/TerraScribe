@@ -74,8 +74,8 @@ const Prompt: FC<PromptProps> = ({ generateCode }) => {
     }
 
     return (
-        <div className="flex items-center justify-center">
-            <div className="w-full max-w-screen bg-blue-900 p-6 shadow-md flex items-center space-x-12">
+        <div className="flex-row items-center justify-center">
+            <div className="w-full max-w-screen bg-blue-900 p-6 shadow-md flex-container flex flex-col md:flex-row md:items-stretch md:justify-stretch items-center space-x-6 space-y-6">
                 <textarea
                     className="flex-grow p-2 border rounded-md resize-none"
                     rows={1}
