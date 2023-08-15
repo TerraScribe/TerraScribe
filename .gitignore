@@ -40,3 +40,5 @@
 *venv
 
 .talismanrc
+
+backend/.env
