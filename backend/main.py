@@ -44,9 +44,9 @@ async def get_code(request: Request):
     model = "gpt-3.5-turbo-16k-0613"
 
 
-    response = openai_call(model, prompt)
+    response = await openai_call(model, prompt)
 
-    return response
+    return {"message": response}
 
     # return {
     #     "model": response['model'],
