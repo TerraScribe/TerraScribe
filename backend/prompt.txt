@@ -7,7 +7,4 @@ Generate Terraform code for provisioning a <architecture-explanation> in <cloud-
 - Document each resource and module for future reference.
 - Ensure the architecture has strategy for backup and Disaster Recovery.
 - Enable proper monitoring and logging for the infrastructure.
-
-Please provide the Terraform code that accomplishes the above requirements, including appropriate resource names, variable definitions, and module organization. 
-
-[Optionally, include any additional specifications or preferences you have for the architecture or code generation process.]
+ Provide the Terraform code in the output format given below that accomplishes the above requirements, including appropriate resource names, variable definitions, and module organization. 
