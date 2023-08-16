@@ -42,8 +42,6 @@ async def visualize(prompt: Prompt):
         response = response.split("```json",1)[1]
         response = response.split("```",1)[0]
 
-    print("visualized", response)
-        
     return {"message": response} 
 
 @app.get("/code")
