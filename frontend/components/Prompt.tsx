@@ -65,7 +65,7 @@ const Prompt: FC<PromptProps> = ({ generateCode }) => {
                 selectedTfVersion
             );
             setJson(data);
-            data !== "" && setShowModal(true);
+            data && setShowModal(true);
             setVisualizeIsLoading(false);
         }
     };
