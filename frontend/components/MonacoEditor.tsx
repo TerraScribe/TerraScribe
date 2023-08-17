@@ -18,7 +18,7 @@ const MonacoEditor: FC<MonacoEditorProps> = ({ value }) => {
                     defaultLanguage="json"
                     theme="vs-dark"
                     value={code}
-                    onChange={(newCode: string) => {
+                    onChange={(newCode: any) => {
                         newCode !== code && setCode(newCode);
                     }}
                 />
