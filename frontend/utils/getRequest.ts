@@ -1,8 +1,8 @@
-'use client';
+import { apiConfig } from "./api_config";
 
-const getRequest = async (url: string) => {
+const getRequest = async () => {
     try {
-        const response = await fetch(url);
+        const response = await fetch(apiConfig.url+'/code');
         const data = await response.json();
         console.log(data);
         return data;

@@ -18,7 +18,7 @@ export default function Home() {
         console.log(prompt);
         console.log(selectedProvider);
         console.log(selectedTfVersion);
-        let data = await getRequest("http://localhost:8080/code");
+        let data = await getRequest();
         setGeneratedCode(data.message.choices[0].message.content);
         // postRequest('http://localhost:3000/api/generate', {
         //     prompt: prompt,
@@ -37,7 +37,7 @@ export default function Home() {
         console.log(selectedProvider);
         console.log(selectedTfVersion);
         console.log(json)
-        let data = await postRequest('http://localhost:8080/code/visual', {
+        let data = await postRequest({
             prompt: prompt,
             visual_json : json
             // provider: selectedProvider,

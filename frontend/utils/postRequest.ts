@@ -1,8 +1,8 @@
-'use client';
+import { apiConfig } from "./api_config";
 
-const postRequest = async (url: string, body: any) => {
+const postRequest = async (body: any) => {
     try {
-        const response = await fetch(url, {
+        const response = await fetch(apiConfig.url+'/code/visual', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(body),
