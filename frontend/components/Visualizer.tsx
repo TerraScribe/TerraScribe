@@ -1,11 +1,11 @@
 "use client";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 
-interface VisualizorProps {
+interface VisualizerProps {
     code: string;
 }
 
-const Visualizor: FC<VisualizorProps> = ({ code }) => {
+const Visualizer: FC<VisualizerProps> = ({ code }) => {
     const [json, setJson] = useState("");
     const iframeRef = useRef<HTMLIFrameElement | null>(null);
 
@@ -53,4 +53,4 @@ const Visualizor: FC<VisualizorProps> = ({ code }) => {
     );
 };
 
-export default Visualizor;
+export default Visualizer;

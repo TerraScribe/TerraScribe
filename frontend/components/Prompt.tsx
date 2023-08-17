@@ -10,12 +10,20 @@ interface PromptProps {
         selectedProvider: string,
         selectedTfVersion: string
     ) => void;
+    generateCodeWithJSON: (
+        prompt: string,
+        selectedProvider: string,
+        selectedTfVersion: string,
+        json: string
+    ) => void;
 }
 
-const Prompt: FC<PromptProps> = ({ generateCode }) => {
+const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON }) => {
     const [prompt, setPrompt] = useState<string>("");
     const [json, setJson] = useState<string>("");
     const [visualizeIsLoading, setVisualizeIsLoading] =
+        useState<boolean>(false);
+    const [generateIsLoading, setGenerateIsLoading] =
         useState<boolean>(false);
     const [showModal, setShowModal] = useState<boolean>(false);
     const [selectedProvider, setSelectedProvider] = useState<string>("aws");
@@ -48,10 +56,13 @@ const Prompt: FC<PromptProps> = ({ generateCode }) => {
         setSelectedTfVersion(event.target.value);
     };
 
-    const handleGenerateClick = (e: any) => {
+    const handleGenerateClick = async (e: any) => {
         e.preventDefault();
         if (validatePromptInputs(prompt, selectedProvider, selectedTfVersion)) {
-            generateCode(prompt, selectedProvider, selectedTfVersion);
+            setGenerateIsLoading(true);
+            await generateCodeWithJSON(prompt, selectedProvider, selectedTfVersion,json);
+            setGenerateIsLoading(false);
+            setShowModal(false);
         }
     };
 
@@ -135,12 +146,6 @@ const Prompt: FC<PromptProps> = ({ generateCode }) => {
                     ))}
                 </select>
                 <button
-                    className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-                    onClick={handleGenerateClick}
-                >
-                    Generate
-                </button>
-                <button
                     className="bg-gray-100 px-4 py-2 rounded-md hover:bg-gray-400 text-lg"
                     onClick={handleBackClick}
                 >
@@ -196,9 +201,10 @@ const Prompt: FC<PromptProps> = ({ generateCode }) => {
                                     <button
                                         className="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() => setShowModal(false)}
+                                        disabled={generateIsLoading}
+                                        onClick={handleGenerateClick}
                                     >
-                                        Generate
+                                        {generateIsLoading ? "Loading..." : "Generate"}
                                     </button>
                                 </div>
                             </div>

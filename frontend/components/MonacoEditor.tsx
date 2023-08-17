@@ -1,7 +1,7 @@
 "use client";
 import { FC, useState } from "react";
 import Editor from "@monaco-editor/react";
-import Visualizor from "./Visualizor";
+import Visualizer from "./Visualizer";
 
 interface MonacoEditorProps {
     value: string;
@@ -24,7 +24,7 @@ const MonacoEditor: FC<MonacoEditorProps> = ({ value }) => {
                 />
             </div>
             <div className="w-[50%] mx-5">
-                <Visualizor code={code} />
+                <Visualizer code={code} />
             </div>
         </div>
     );
