@@ -4,7 +4,7 @@ import { FC } from "react";
 import { useState } from "react";
 import MonacoEditor from "./MonacoEditor";
 import PromptHistory from "./PromptHistory";
-
+import CodeAnalysis from "./CodeAnalysis";
 interface PromptProps {
     generateCode: (
         prompt: string,
@@ -17,12 +17,14 @@ interface PromptProps {
         selectedTfVersion: string,
         json: string
     ) => void;
+    analyzeCode : () => string;
 }
 
-const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON }) => {
+const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON , analyzeCode}) => {
     const [prompt, setPrompt] = useState<string>("");
     const [prompts, setPrompts] = useState<Array<string>>([]);
     const [json, setJson] = useState<string>("");
+    const [analysis, setAnalysis] = useState<string>("");
 
     const [visualizeIsLoading, setVisualizeIsLoading] =
         useState<boolean>(false);
@@ -33,6 +35,7 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON }) => {
 
     const [showModal, setShowModal] = useState<boolean>(false);
     const [showPromptHistoryModal, setShowPromptHistoryModal] = useState<boolean>(false);
+    const [showAnalyzeModal, setShowAnalyzeModal] = useState<boolean>(false);
 
     const [selectedProvider, setSelectedProvider] = useState<string>("aws");
     const [selectedTfVersion, setSelectedTfVersion] =
@@ -98,18 +101,18 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON }) => {
     };
 
     const handleAnalyzeClick = async (e: any) => {
+        console.log('here')
         e.preventDefault();
-        // if (validatePromptInputs(prompt, selectedProvider, selectedTfVersion)) {
-        //     setVisualizeIsLoading(true);
-        //     const data = await visualize(
-        //         prompt,
-        //         selectedProvider,
-        //         selectedTfVersion
-        //     );
-        //     setJson(data);
-        //     data && setShowModal(true);
-        //     setVisualizeIsLoading(false);
-        // }
+        setAnalyzeIsLoading(true);
+        let data = await analyzeCode();
+        if(data !== null){
+            setAnalysis(data);
+            data && setShowAnalyzeModal(true);
+            setAnalyzeIsLoading(false);
+        }
+        else {
+        setAnalyzeIsLoading(false);
+        }
     };
 
     const validatePromptInputs = (
@@ -188,10 +191,10 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON }) => {
                 </button>
                 <button
                     className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                    onClick={handleVisualizeClick}
-                    disabled={visualizeIsLoading}
+                    onClick={handleAnalyzeClick}
+                    disabled={analyzeIsLoading}
                 >
-                    {visualizeIsLoading ? "Loading..." : "Analyze"}
+                    {analyzeIsLoading ? "Loading..." : "Analyze"}
                 </button>
                 <button
                     className="bg-cyan-500 text-white px-4 py-2 rounded-md hover:bg-cyan-600"
@@ -287,6 +290,46 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON }) => {
                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
                                         onClick={() => setShowPromptHistoryModal(false)}
+                                    >
+                                        Close
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="opacity-25 fixed inset-0 z-40 bg-black"></div>
+                </>
+            ) : null}
+            {showAnalyzeModal ? (
+                <>
+                    <div className="justify-center items-center flex overflow-x-hidden overflow-y-auto fixed inset-0 z-50 outline-none focus:outline-none">
+                        <div className="relative w-[90%] h-[90%] m-6 mx-auto">
+                            {/*content*/}
+                            <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
+                                {/*header*/}
+                                <div className="flex items-start justify-between py-2 px-5 border-b border-solid border-slate-200 rounded-t">
+                                      <h3 className="text-3xl font-semibold">
+                                        Code Analysis
+                                    </h3>
+                                    <button
+                                        className="p-1 ml-auto bg-transparent border-0 text-black float-right text-3xl leading-none font-semibold outline-none focus:outline-none"
+                                        onClick={() => setShowAnalyzeModal(false)}
+                                    >
+                                        <span className="h-6 w-6 text-2xl focus:outline-none">
+                                            ×
+                                        </span>
+                                    </button>
+                                </div>
+                                {/*body*/}
+                                <div className="relative flex-auto">
+                                    <CodeAnalysis analysis={analysis}/>
+                                </div>
+                                {/*footer*/}
+                                <div className="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
+                                    <button
+                                        className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                        type="button"
+                                        onClick={() =>  setShowAnalyzeModal(false)}
                                     >
                                         Close
                                     </button>
