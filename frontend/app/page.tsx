@@ -5,6 +5,7 @@ import getRequest from "@/utils/getRequest";
 import { Editor } from "@monaco-editor/react";
 import { useState } from "react";
 import postRequest from "@/utils/postRequest";
+import extractTerraformFiles from "@/utils/extract";
 // import Image from "next/image";
 
 export default function Home() {
@@ -43,6 +44,9 @@ export default function Home() {
             // provider: selectedProvider,
             // version: selectedTfVersion,
         });
+        let response = extractTerraformFiles(data.message.choices[0].message.content);
+        console.log('Split code')
+        console.log(response)
         setGeneratedCode(data.message.choices[0].message.content);
 
     };
