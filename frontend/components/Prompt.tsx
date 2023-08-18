@@ -5,6 +5,7 @@ import { useState } from "react";
 import MonacoEditor from "./MonacoEditor";
 import PromptHistory from "./PromptHistory";
 import CodeAnalysis from "./CodeAnalysis";
+
 interface PromptProps {
     generateCode: (
         prompt: string,
@@ -17,7 +18,7 @@ interface PromptProps {
         selectedTfVersion: string,
         json: string
     ) => void;
-    analyzeCode : () => string;
+    analyzeCode : () => Promise<string>;
 }
 
 const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON , analyzeCode}) => {
