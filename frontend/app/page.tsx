@@ -8,6 +8,7 @@ import postRequest from "@/utils/postRequest";
 import analysisRequest from "@/utils/analysisRequest";
 import Header from "@/components/Header";
 // import Image from "next/image";
+import JSZip from 'jszip';
 
 export default function Home() {
     const [generatedCode, setGeneratedCode] = useState<string>("");
@@ -60,10 +61,34 @@ export default function Home() {
         }
         return null;
     };
+    
+    const generateZIPFile = async () => {
+        console.log(generatedCode)
+        if(generatedCode && generatedCode.length > 0){
+            const zip = new JSZip();
+            console.log('check')
+            zip.file("main.tf", generatedCode);
+
+            zip.generateAsync({ type: "blob" }).then(function (content) {
+                // Create a download link
+                const downloadLink = document.createElement("a");
+                downloadLink.href = URL.createObjectURL(content);
+                downloadLink.download = "myFiles.zip";
+                downloadLink.click();
+            });
+            
+
+        }
+    }
     return (
         <div className="bg-blue-950 h-screen m-0 p-0">
             <Header />
-            <Prompt generateCode={generateCode} generateCodeWithJSON={generateCodeWithJSON} analyzeCode={analyzeCode}/>
+            <Prompt 
+                generateCode={generateCode} 
+                generateCodeWithJSON={generateCodeWithJSON} 
+                analyzeCode={analyzeCode}
+                generateZIPFile={generateZIPFile} 
+            />
             <Editor
                 height="80vh"
                 language="hcl"
