@@ -228,9 +228,8 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON, analyzeC
                 <button
                     className="bg-fuchsia-600 text-white px-4 py-2 rounded-md hover:bg-fuchsia-500 font-roboto"
                     onClick={handlePromptHistoryClick}
-                    disabled={visualizeIsLoading}
                 >
-                    {visualizeIsLoading ? "Loading..." : "Prompt history"}
+                    Prompt history
                 </button>
             </div>
             {showModal ? (

@@ -79,7 +79,7 @@ export default function Home() {
                 onChange={(newCode: any) => { setGeneratedCode(newCode) }}
                 options={
                     {
-                        fontSize: "16px"
+                        fontSize: 16
                     }
                 }
             />
