@@ -150,6 +150,12 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON , analyzeC
                     value={prompt}
                     onChange={handlePromptChange}
                 ></textarea>
+
+                <div className="flex flex-col">
+                    <div className="mb-1">
+                        <label className="mb-1 text-slate-300">Cloud Provider:</label>
+                    </div>
+                    <div>
                 <select
                     className="px-2 py-1 border rounded-md bg-white text-gray-800"
                     value={selectedProvider}
@@ -164,13 +170,20 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON , analyzeC
                         </option>
                     ))}
                 </select>
+                </div>
+                </div>
+                <div className="flex flex-col">
+                    <div className="mb-1">
+                        <label className="mb-1 text-slate-300">Terraform Version:</label>
+                    </div>
+                    <div>
                 <select
                     className="px-2 py-1 border rounded-md bg-white text-gray-800"
                     value={selectedTfVersion}
                     onChange={handleVersionChange}
                 >
                     <option key="select" value="select" disabled>
-                        Version
+                        Terraform Version
                     </option>
                     {tfVersionOptions.map((option) => (
                         <option key={option.value} value={option.value}>
@@ -178,6 +191,8 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON , analyzeC
                         </option>
                     ))}
                 </select>
+                </div>
+                </div>
                 {/* <button
                     className="bg-gray-100 px-4 py-2 rounded-md hover:bg-gray-400 text-lg"
                     onClick={handleBackClick}
