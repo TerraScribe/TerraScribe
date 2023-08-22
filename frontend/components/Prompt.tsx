@@ -7,18 +7,18 @@ import PromptHistory from "./PromptHistory";
 import CodeAnalysis from "./CodeAnalysis";
 
 interface PromptProps {
-    generatedCode : string;
+    generatedCode: string;
     generateCodeWithJSON: (
         prompt: string,
         selectedProvider: string,
         selectedTfVersion: string,
         json: string
     ) => void;
-    analyzeCode : () => Promise<string>;
-    generateZIPFile : () => void;
+    analyzeCode: () => Promise<string>;
+    generateZIPFile: () => void;
 }
 
-const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyzeCode, generateZIPFile}) => {
+const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON, analyzeCode, generateZIPFile }) => {
     const [prompt, setPrompt] = useState<string>("");
     const [prompts, setPrompts] = useState<Array<string>>([]);
     const [json, setJson] = useState<string>("");
@@ -69,10 +69,10 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
         e.preventDefault();
         if (validatePromptInputs(prompt, selectedProvider, selectedTfVersion)) {
             setGenerateIsLoading(true);
-            await generateCodeWithJSON(prompt, selectedProvider, selectedTfVersion,json);
+            await generateCodeWithJSON(prompt, selectedProvider, selectedTfVersion, json);
             setGenerateIsLoading(false);
             setShowModal(false);
-            if(prompts.includes(prompt) === false){
+            if (prompts.includes(prompt) === false) {
                 setPrompts([...prompts, prompt]);
             }
         }
@@ -103,13 +103,13 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
         e.preventDefault();
         setAnalyzeIsLoading(true);
         let data = await analyzeCode();
-        if(data !== null){
+        if (data !== null) {
             setAnalysis(data);
             data && setShowAnalyzeModal(true);
             setAnalyzeIsLoading(false);
         }
         else {
-        setAnalyzeIsLoading(false);
+            setAnalyzeIsLoading(false);
         }
     };
 
@@ -140,54 +140,54 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
         <div className="flex-row items-center justify-center">
             <div className="w-full max-w-screen bg-blue-900 p-6 shadow-md flex-container flex flex-col md:flex-row md:items-stretch md:justify-stretch items-center space-x-6 space-y-6">
                 <textarea
-                    className="flex-grow p-2 border rounded-md resize-none"
+                    className="flex-grow p-2 font-roboto font-light border rounded-md resize-none bg-gray-100"
                     rows={1}
-                    placeholder="Example : An ec2 instance within a vpc on AWS."
+                    placeholder="Example: Create an ec2 instance in aws by placing it in a public subnet of a VPC network with an elastic ip and an internet gateway attached to the VPC. Attach a route table with the subnet and finally attach a network interface to the ec2 instance."
                     value={prompt}
                     onChange={handlePromptChange}
                 ></textarea>
 
                 <div className="flex flex-col">
                     <div className="mb-1">
-                        <label className="mb-1 text-slate-300">Cloud Provider:</label>
+                        <label className="mb-1 text-slate-300 font-roboto">Cloud Provider</label>
                     </div>
                     <div>
-                <select
-                    className="px-2 py-1 border rounded-md bg-white text-gray-800"
-                    value={selectedProvider}
-                    onChange={handleProviderChange}
-                >
-                    <option key="select" value="select" disabled>
-                        Select Provider
-                    </option>
-                    {providerOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </select>
-                </div>
+                        <select
+                            className="px-2 py-1 border rounded-md bg-gray-100 text-gray-800"
+                            value={selectedProvider}
+                            onChange={handleProviderChange}
+                        >
+                            <option key="select" value="select" disabled>
+                                Select Provider
+                            </option>
+                            {providerOptions.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
                 <div className="flex flex-col">
                     <div className="mb-1">
-                        <label className="mb-1 text-slate-300">Terraform Version:</label>
+                        <label className="mb-1 text-slate-300 font-roboto">Terraform Version</label>
                     </div>
                     <div>
-                <select
-                    className="px-2 py-1 border rounded-md bg-white text-gray-800"
-                    value={selectedTfVersion}
-                    onChange={handleVersionChange}
-                >
-                    <option key="select" value="select" disabled>
-                        Terraform Version
-                    </option>
-                    {tfVersionOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                            {option.label}
-                        </option>
-                    ))}
-                </select>
-                </div>
+                        <select
+                            className="px-2 py-1 border rounded-md bg-gray-100 text-gray-800"
+                            value={selectedTfVersion}
+                            onChange={handleVersionChange}
+                        >
+                            <option key="select" value="select" disabled>
+                                Terraform Version
+                            </option>
+                            {tfVersionOptions.map((option) => (
+                                <option key={option.value} value={option.value}>
+                                    {option.label}
+                                </option>
+                            ))}
+                        </select>
+                    </div>
                 </div>
                 {/* <button
                     className="bg-gray-100 px-4 py-2 rounded-md hover:bg-gray-400 text-lg"
@@ -202,31 +202,31 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
                     &#8250;
                 </button> */}
                 <button
-                    className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
+                    className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-500 font-roboto"
                     onClick={handleVisualizeClick}
                     disabled={visualizeIsLoading}
                 >
                     {visualizeIsLoading ? "Loading..." : "Visualize"}
                 </button>
-            {generatedCode && generatedCode.length > 0 ? (
-            <>
+                {generatedCode && generatedCode.length > 0 ? (
+                    <>
+                        <button
+                            className="bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-500 font-roboto"
+                            onClick={handleAnalyzeClick}
+                            disabled={analyzeIsLoading}
+                        >
+                            {analyzeIsLoading ? "Loading..." : "Analyze"}
+                        </button>
+                        <button
+                            className="bg-cyan-600 text-white px-4 py-2 rounded-md hover:bg-cyan-500 font-roboto"
+                            onClick={handleExportClick}
+                        >
+                            Export
+                        </button>
+                    </>
+                ) : null}
                 <button
-                    className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
-                    onClick={handleAnalyzeClick}
-                    disabled={analyzeIsLoading}
-                >
-                    {analyzeIsLoading ? "Loading..." : "Analyze"}
-                </button>
-                <button
-                    className="bg-cyan-500 text-white px-4 py-2 rounded-md hover:bg-cyan-600"
-                    onClick={handleExportClick}
-                >
-                   Export
-                </button>
-                </>
-            ) : null}
-            <button
-                    className="bg-fuchsia-500 text-white px-4 py-2 rounded-md hover:bg-fuchsia-600"
+                    className="bg-fuchsia-600 text-white px-4 py-2 rounded-md hover:bg-fuchsia-500 font-roboto"
                     onClick={handlePromptHistoryClick}
                     disabled={visualizeIsLoading}
                 >
@@ -241,7 +241,7 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
                                 <div className="flex items-start justify-between py-2 px-5 border-b border-solid border-slate-200 rounded-t">
-                                      <h3 className="text-3xl font-semibold">
+                                    <h3 className="text-3xl font-semibold">
                                         Visualizer
                                     </h3>
                                     <button
@@ -290,7 +290,7 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
                                 <div className="flex items-start justify-between py-2 px-5 border-b border-solid border-slate-200 rounded-t">
-                                      <h3 className="text-3xl font-semibold">
+                                    <h3 className="text-3xl font-semibold">
                                         Prompt History
                                     </h3>
                                     <button
@@ -304,7 +304,7 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
                                 </div>
                                 {/*body*/}
                                 <div className="relative flex-auto">
-                                    <PromptHistory prompts={prompts}/>
+                                    <PromptHistory prompts={prompts} />
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
@@ -330,7 +330,7 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
                             <div className="border-0 rounded-lg shadow-lg relative flex flex-col w-full bg-white outline-none focus:outline-none">
                                 {/*header*/}
                                 <div className="flex items-start justify-between py-2 px-5 border-b border-solid border-slate-200 rounded-t">
-                                      <h3 className="text-3xl font-semibold">
+                                    <h3 className="text-3xl font-semibold">
                                         Code Analysis
                                     </h3>
                                     <button
@@ -344,14 +344,14 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyze
                                 </div>
                                 {/*body*/}
                                 <div className="relative flex-auto">
-                                    <CodeAnalysis analysis={analysis}/>
+                                    <CodeAnalysis analysis={analysis} />
                                 </div>
                                 {/*footer*/}
                                 <div className="flex items-center justify-end p-2 border-t border-solid border-slate-200 rounded-b">
                                     <button
                                         className="text-red-500 background-transparent font-bold uppercase px-6 py-2 text-sm outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                         type="button"
-                                        onClick={() =>  setShowAnalyzeModal(false)}
+                                        onClick={() => setShowAnalyzeModal(false)}
                                     >
                                         Close
                                     </button>

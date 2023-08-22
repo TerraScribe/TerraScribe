@@ -11,7 +11,7 @@ const Header: FC<HeaderProps> = () => {
           🪄
         </span>
       </h1>
-      <h3 className="font-roboto text-gray-300">Generate terraform code by prompting</h3>
+      <h3 className="font-roboto font-light text-gray-300">Generate terraform code by prompting</h3>
     </header>
   );
 };
