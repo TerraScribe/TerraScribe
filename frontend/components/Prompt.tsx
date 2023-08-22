@@ -7,11 +7,7 @@ import PromptHistory from "./PromptHistory";
 import CodeAnalysis from "./CodeAnalysis";
 
 interface PromptProps {
-    generateCode: (
-        prompt: string,
-        selectedProvider: string,
-        selectedTfVersion: string
-    ) => void;
+    generatedCode : string;
     generateCodeWithJSON: (
         prompt: string,
         selectedProvider: string,
@@ -22,7 +18,7 @@ interface PromptProps {
     generateZIPFile : () => void;
 }
 
-const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON , analyzeCode, generateZIPFile}) => {
+const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON , analyzeCode, generateZIPFile}) => {
     const [prompt, setPrompt] = useState<string>("");
     const [prompts, setPrompts] = useState<Array<string>>([]);
     const [json, setJson] = useState<string>("");
@@ -212,6 +208,8 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON , analyzeC
                 >
                     {visualizeIsLoading ? "Loading..." : "Visualize"}
                 </button>
+            {generatedCode && generatedCode.length > 0 ? (
+            <>
                 <button
                     className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
                     onClick={handleAnalyzeClick}
@@ -225,7 +223,9 @@ const Prompt: FC<PromptProps> = ({ generateCode, generateCodeWithJSON , analyzeC
                 >
                    Export
                 </button>
-                <button
+                </>
+            ) : null}
+            <button
                     className="bg-fuchsia-500 text-white px-4 py-2 rounded-md hover:bg-fuchsia-600"
                     onClick={handlePromptHistoryClick}
                     disabled={visualizeIsLoading}

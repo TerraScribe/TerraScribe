@@ -13,24 +13,6 @@ import JSZip from 'jszip';
 export default function Home() {
     const [generatedCode, setGeneratedCode] = useState<string>("");
 
-
-    const generateCode = async (
-        prompt: string,
-        selectedProvider: string,
-        selectedTfVersion: string
-    ) => {
-        console.log(prompt);
-        console.log(selectedProvider);
-        console.log(selectedTfVersion);
-        let data = await getRequest();
-        setGeneratedCode(data.message.choices[0].message.content);
-        // postRequest('http://localhost:3000/api/generate', {
-        //     prompt: prompt,
-        //     provider: selectedProvider,
-        //     version: selectedTfVersion,
-        // });
-    };
-
     const generateCodeWithJSON = async (
         prompt: string,
         selectedProvider: string,
@@ -73,7 +55,7 @@ export default function Home() {
                 // Create a download link
                 const downloadLink = document.createElement("a");
                 downloadLink.href = URL.createObjectURL(content);
-                downloadLink.download = "myFiles.zip";
+                downloadLink.download = "terraform_code.zip";
                 downloadLink.click();
             });
             
@@ -83,8 +65,8 @@ export default function Home() {
     return (
         <div className="bg-blue-950 h-screen m-0 p-0">
             <Header />
-            <Prompt 
-                generateCode={generateCode} 
+            <Prompt
+                generatedCode={generatedCode}
                 generateCodeWithJSON={generateCodeWithJSON} 
                 analyzeCode={analyzeCode}
                 generateZIPFile={generateZIPFile} 
