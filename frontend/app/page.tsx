@@ -25,7 +25,7 @@ export default function Home() {
         console.log(json)
         let data = await postRequest({
             prompt: prompt,
-            visual_json : json
+            visual_json: json
             // provider: selectedProvider,
             // version: selectedTfVersion,
         });
@@ -34,19 +34,19 @@ export default function Home() {
     };
 
     const analyzeCode = async () => {
-        if(generatedCode && generatedCode.length > 0){
+        if (generatedCode && generatedCode.length > 0) {
             let data = await analysisRequest({
-                code : generatedCode
+                code: generatedCode
             });
             console.log(data)
             return data.message.choices[0].message.content;
         }
         return null;
     };
-    
+
     const generateZIPFile = async () => {
         console.log(generatedCode)
-        if(generatedCode && generatedCode.length > 0){
+        if (generatedCode && generatedCode.length > 0) {
             const zip = new JSZip();
             console.log('check')
             zip.file("main.tf", generatedCode);
@@ -58,7 +58,7 @@ export default function Home() {
                 downloadLink.download = "terraform_code.zip";
                 downloadLink.click();
             });
-            
+
 
         }
     }
@@ -67,16 +67,21 @@ export default function Home() {
             <Header />
             <Prompt
                 generatedCode={generatedCode}
-                generateCodeWithJSON={generateCodeWithJSON} 
+                generateCodeWithJSON={generateCodeWithJSON}
                 analyzeCode={analyzeCode}
-                generateZIPFile={generateZIPFile} 
+                generateZIPFile={generateZIPFile}
             />
             <Editor
                 height="80vh"
                 language="hcl"
                 theme="vs-dark"
                 value={generatedCode}
-                onChange={(newCode: any) => { setGeneratedCode(newCode)}}
+                onChange={(newCode: any) => { setGeneratedCode(newCode) }}
+                options={
+                    {
+                        fontSize: "16px"
+                    }
+                }
             />
         </div>
     );
