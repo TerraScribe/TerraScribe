@@ -161,7 +161,7 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON, analyzeC
                                 Select Provider
                             </option>
                             {providerOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
+                                <option className="font-roboto font-light" key={option.value} value={option.value}>
                                     {option.label}
                                 </option>
                             ))}
@@ -182,7 +182,7 @@ const Prompt: FC<PromptProps> = ({ generatedCode, generateCodeWithJSON, analyzeC
                                 Terraform Version
                             </option>
                             {tfVersionOptions.map((option) => (
-                                <option key={option.value} value={option.value}>
+                                <option className="font-roboto font-light" key={option.value} value={option.value}>
                                     {option.label}
                                 </option>
                             ))}
